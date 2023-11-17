@@ -65,7 +65,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -172,6 +172,7 @@ require('lazy').setup({
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
+vim.o.linebreak = true
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -211,7 +212,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.scrolloff=999
+vim.o.scrolloff = 999
 
 -- [[ Basic Keymaps ]]
 
@@ -219,17 +220,25 @@ vim.o.scrolloff=999
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
-vim.keymap.set({'i', 'v', 'c'}, 'qj', '<Esc>')
+vim.keymap.set({ 'i', 'v', 'c' }, 'qj', '<Esc>')
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader><S-n>', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message'})
+vim.keymap.set('n', '<leader><S-n>', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', '<leader>n', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<C-x>', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+-- move lines up and down with alt hjkl
+vim.keymap.set('n', '<m-j>', ':m .+1<CR>==')
+vim.keymap.set('n', '<m-k>', ':m .-2<CR>==')
+vim.keymap.set('i', '<m-j>', '<Esc>:m .+1<CR>==gi')
+vim.keymap.set('i', '<m-k>', '<Esc>:m .-2<CR>==gi')
+vim.keymap.set('v', '<m-j>', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', '<m-k>', ":m '<-2<CR>gv=gv")
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -287,7 +296,7 @@ local function live_grep_git_root()
   local git_root = find_git_root()
   if git_root then
     require('telescope.builtin').live_grep({
-      search_dirs = {git_root},
+      search_dirs = { git_root },
     })
   end
 end
@@ -456,7 +465,7 @@ local servers = {
   pyright = {},
   rust_analyzer = {},
   -- tsserver = {},
-  html = { filetypes = { 'html'} },
+  html = { filetypes = { 'html' } },
 
   lua_ls = {
     Lua = {
