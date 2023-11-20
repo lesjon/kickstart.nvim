@@ -136,7 +136,7 @@ require('lazy').setup({
     opts = {},
   },
 
-  -- "gc" to comment visual regions/lines
+  -- "gc" to comment visual regions/lines, "gcc/gbc" in insert mode
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -213,12 +213,15 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.o.scrolloff = 999
+vim.o.splitright = true
+vim.o.splitbelow = true
 
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<BS>', '<Nop>', { silent = true })
 
 vim.keymap.set({ 'i', 'v', 'c' }, 'qj', '<Esc>')
 
@@ -239,6 +242,11 @@ vim.keymap.set('i', '<m-j>', '<Esc>:m .+1<CR>==gi')
 vim.keymap.set('i', '<m-k>', '<Esc>:m .-2<CR>==gi')
 vim.keymap.set('v', '<m-j>', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', '<m-k>', ":m '<-2<CR>gv=gv")
+
+-- open terminal
+vim.keymap.set('n', '`', ':terminal<CR>i')
+-- open FilTree
+vim.keymap.set('n', '<c-n>', ':Ntree<CR>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
